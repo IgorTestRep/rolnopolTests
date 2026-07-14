@@ -1,0 +1,18 @@
+# Playwright browser binaries
+/node_modules/
+/playwright-report/
+/test-results/
+/dist/
+
+# Environment files (keep .env.example, ignore real env files)
+.env
+.env.local
+.env.*.local
+
+# OS artefacts
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
