@@ -4,7 +4,9 @@ export interface UserCredentials {
   role?: string;
 }
 
-/** Pre-configured demo users bundled with the Rolnopol application. */
+/** Pre-configured demo users bundled with the Rolnopol application. 
+ * CREDENSHIALS SHOULD NEVER BE STORED LIKE THIS IN A REAL APPLICATION. This is only for testing purposes.
+*/
 export const TEST_USERS = {
   demo: {
     email: 'demo@example.com',
