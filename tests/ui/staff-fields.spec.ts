@@ -34,15 +34,15 @@ test.describe('Staff & Fields Management Page', () => {
     await expect(staffFieldsPage.fieldAreaInput).toBeVisible();
   });
 
-  test('Add Staff button opens the staff modal', async ({ staffFieldsPage, page }) => {
+  test('Add Staff button opens the staff modal', async ({ staffFieldsPage }) => {
     await staffFieldsPage.goto();
     await staffFieldsPage.waitForFieldsLoaded();
 
     await staffFieldsPage.addStaffButton.click();
 
     await expect(staffFieldsPage.addStaffModal).toBeVisible();
-    await expect(page.locator('#staffName')).toBeVisible();
-    await expect(page.locator('#staffSurname')).toBeVisible();
-    await expect(page.locator('#staffAge')).toBeVisible();
+    await expect(staffFieldsPage.staffNameInput).toBeVisible();
+    await expect(staffFieldsPage.staffSurnameInput).toBeVisible();
+    await expect(staffFieldsPage.staffAgeInput).toBeVisible();
   });
 });

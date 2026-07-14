@@ -20,28 +20,26 @@ test.describe('User Authentication Journey', () => {
     await expect(page.locator('h2').filter({ hasText: 'Demo User' })).toBeVisible({ timeout: 10_000 });
   });
 
-  test('after login, user can access the financial management page', async ({ loginPage, page }) => {
+  test('after login, user can access the financial management page', async ({ loginPage, page, financialPage }) => {
     await loginPage.goto();
     await loginPage.login(TEST_USERS.demo.email, TEST_USERS.demo.password);
     await loginPage.waitForSuccessfulLogin();
 
-    await page.goto('/financial.html');
-    await page.waitForLoadState('domcontentloaded');
+    await financialPage.goto();
 
     await expect(page).not.toHaveURL(/login\.html/);
-    await expect(page.locator('#current-balance')).toBeVisible();
+    await expect(financialPage.balanceAmount).toBeVisible();
   });
 
-  test('after login, user can access the staff and fields management page', async ({ loginPage, page }) => {
+  test('after login, user can access the staff and fields management page', async ({ loginPage, page, staffFieldsPage }) => {
     await loginPage.goto();
     await loginPage.login(TEST_USERS.demo.email, TEST_USERS.demo.password);
     await loginPage.waitForSuccessfulLogin();
 
-    await page.goto('/staff-fields-main.html');
-    await page.waitForLoadState('domcontentloaded');
+    await staffFieldsPage.goto();
 
     await expect(page).not.toHaveURL(/login\.html/);
-    await expect(page.locator('#fieldsList')).toBeVisible();
+    await expect(staffFieldsPage.fieldsList).toBeVisible();
   });
 
   test('wrong password keeps the user on login page with an error', async ({ loginPage, page }) => {

@@ -55,7 +55,7 @@ test.describe('Farm Navigation & Platform Features UI', () => {
     expect(title.toLowerCase()).not.toContain('404');
   });
 
-  test('mocked farm statistics are displayed on the home page', async ({ page }) => {
+  test('mocked farm statistics are displayed on the home page', async ({ page, homePage }) => {
     await page.route('**/api/v1/statistics', (route) =>
       route.fulfill({
         status: 200,
@@ -70,8 +70,8 @@ test.describe('Farm Navigation & Platform Features UI', () => {
     await page.waitForTimeout(1600);
 
     // The DOM should contain animated numeric values, not the loading placeholder
-    for (const id of ['#stat-users', '#stat-farms', '#stat-staff', '#stat-animals']) {
-      const text = await page.locator(id).innerText();
+    for (const locator of [homePage.statUsers, homePage.statFarms, homePage.statStaff, homePage.statAnimals]) {
+      const text = await locator.innerText();
       expect(text).not.toBe('-');
       expect(text).toMatch(/\d/);
     }

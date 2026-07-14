@@ -2,8 +2,6 @@ import { test, expect } from '../../src/fixtures/fixtures';
 import type { Field } from '../../src/api/farm.api';
 
 test.describe('Farm Domain API', () => {
-  // ── Statistics (public) ─────────────────────────────────────────────────
-
   test('GET /api/v1/statistics — publicly accessible without a token', async ({ farmApi }) => {
     const res = await farmApi.getStatistics();
 
@@ -16,19 +14,15 @@ test.describe('Farm Domain API', () => {
     expect(res.status).toBe(200);
     const { users, farms, area, staff, animals } = res.body;
 
-    // Statistics endpoint does NOT use the standard ApiEnvelope wrapper
     for (const [key, value] of Object.entries({ users, farms, area, staff, animals })) {
       expect(typeof value, `${key} should be a number`).toBe('number');
       expect(value, `${key} should be >= 0`).toBeGreaterThanOrEqual(0);
     }
   });
 
-  // ── Fields ──────────────────────────────────────────────────────────────
-
   test('GET /api/v1/fields — returns 401/403 without a token', async ({ farmApi }) => {
     const res = await farmApi.getFields();
 
-    // 401 = no auth, 403 = forbidden, 429 = rate limited (all deny access)
     expect([401, 403, 429]).toContain(res.status);
   });
 
@@ -47,8 +41,6 @@ test.describe('Farm Domain API', () => {
     expect(typeof first.area).toBe('number');
     expect(first.area).toBeGreaterThan(0);
   });
-
-  // ── Animals / livestock ─────────────────────────────────────────────────
 
   test('GET /api/v1/animals — returns 401/403 without a token', async ({ farmApi }) => {
     const res = await farmApi.getAnimals();
@@ -69,8 +61,6 @@ test.describe('Farm Domain API', () => {
     expect(typeof first.amount).toBe('number');
     expect(first.amount).toBeGreaterThan(0);
   });
-
-  // ── Staff / personnel ───────────────────────────────────────────────────
 
   test('GET /api/v1/staff — returns 401/403 without a token', async ({ farmApi }) => {
     const res = await farmApi.getStaff();
@@ -93,12 +83,9 @@ test.describe('Farm Domain API', () => {
     expect(first.age).toBeGreaterThan(0);
   });
 
-  // ── Marketplace ─────────────────────────────────────────────────────────
-
   test('GET /api/v1/marketplace — requires authentication (returns 4xx without a token)', async ({ farmApi }) => {
     const res = await farmApi.getMarketplace();
 
-    // The endpoint returns 404 (hidden) for unauthenticated users instead of 401
     expect(res.status).toBeGreaterThanOrEqual(400);
     expect(res.status).toBeLessThan(500);
   });

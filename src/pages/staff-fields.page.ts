@@ -17,6 +17,9 @@ export class StaffFieldsPage extends BasePage {
   readonly addStaffModal: Locator;
   readonly fieldNameInput: Locator;
   readonly fieldAreaInput: Locator;
+  readonly staffNameInput: Locator;
+  readonly staffSurnameInput: Locator;
+  readonly staffAgeInput: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -34,6 +37,9 @@ export class StaffFieldsPage extends BasePage {
     this.addStaffModal   = page.locator('#addStaffModal');
     this.fieldNameInput  = page.locator('#fieldName');
     this.fieldAreaInput  = page.locator('#fieldArea');
+    this.staffNameInput    = page.locator('#staffName');
+    this.staffSurnameInput = page.locator('#staffSurname');
+    this.staffAgeInput     = page.locator('#staffAge');
   }
 
   async goto(): Promise<void> {
